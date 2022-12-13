@@ -3,17 +3,20 @@
  */
 package FFSSM;
 
+//import jdk.vm.ci.meta.Local;
+
 import java.time.LocalDate;
+import java.util.Objects;
 
-public class Licence {
+public class Licence implements Comparable<Licence> {
 
-    public Personne possesseur;
+    private Personne possesseur;
 
-    public String numero;
+    private String numero;
 
-    public LocalDate delivrance;
+    private LocalDate delivrance;
 
-    public Club club;
+    private Club club;
 
     public Licence(Personne possesseur, String numero, LocalDate delivrance, Club club) {
         this.possesseur = possesseur;
@@ -45,8 +48,15 @@ public class Licence {
      * @return vrai si valide à la date d
      **/
     public boolean estValide(LocalDate d) {
-         // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        LocalDate dvalide = delivrance.plusYears(1);
+        return d.isBefore(dvalide);
     }
 
+    @Override
+    public int compareTo(Licence l) {
+        int res=0;
+        if(this.delivrance.isAfter(l.getDelivrance())) res=1;
+        else res=-1;
+        return res;
+    }
 }
